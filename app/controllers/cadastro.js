@@ -5,7 +5,6 @@ module.exports.cadastro = function(app, req, res) {
 module.exports.cadastrar = function(app, req, res) {
 
   const formData = req.body
-  console.log(formData)
 
   req.assert('nome', 'Nome não pode ser vazio').notEmpty()
   req.assert('usuario', 'Usuário não pode ser vazio').notEmpty()
