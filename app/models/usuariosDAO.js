@@ -4,9 +4,15 @@ function UsuariosDAO(db) {
 
 UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
   this._conn.open(function(error, client) {
+    
     client.collection('usuarios', function (error, collection){
       collection.insert(usuarioDTO)
+
+      client.close();
     })
+
+    
+  
   })
 }
 

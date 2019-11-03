@@ -1,12 +1,14 @@
 FROM node:8
 
-RUN mkdir -p /usr/scr/app
+RUN mkdir -p /usr/src/got/
 
-COPY ./package*.json /usr/scr/app
+WORKDIR /usr/src/got/
+
+COPY package*.json /usr/src/got/
 
 RUN npm i
 
-COPY . /usr/scr/app
+COPY . /usr/src/app
 
 RUN npm i -g --save-dev nodemon
 

@@ -7,7 +7,7 @@ const mongoDbConnection =  function () {
   const db = new mongo.Db(
     'got',
     new mongo.Server(
-      '127.0.0.1',
+      'mongo',
       27017,
       {}
     ),
