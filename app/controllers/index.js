@@ -29,7 +29,7 @@ module.exports.auth = async function(app, req, res) {
   } else {
 
     req.session.authorized = false
-    res.render('index', { invalid: { msg: 'Nome de usuário ou senha inválidos' } })
+    res.render('index', { invalid: [{ msg: 'Nome de usuário ou senha inválidos' }] })
     
   }  
 
