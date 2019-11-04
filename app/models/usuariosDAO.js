@@ -3,9 +3,9 @@ function UsuariosDAO(db) {
 }
 
 UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
-  this._conn.open(function(error, client) {
-    
-    client.collection('usuarios', function (error, collection){
+  this._conn.open(function (error, client) {
+
+    client.collection('usuarios', function (error, collection) {
       collection.insert(usuarioDTO)
 
       client.close();
@@ -13,32 +13,19 @@ UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
   })
 }
 
-UsuariosDAO.prototype.auth = function (userDto, req, res) {
+UsuariosDAO.prototype.auth = async function (userDto) {
 
+  try {
+    const client = await this._conn.open();
+    const collection = await client.collection('usuarios')
+    const resultSet = await collection.find(userDto).toArray()
+    return resultSet
+  } catch (error) {
+
+    console.log(error)
   
-  this._conn.open(function(error, client) {
+  }
     
-    client.collection('usuarios', function (error, collection){
-      const users = collection.find(userDto).toArray(function(error, result) {
-        console.log(result)
-      
-        // create session var authorized
-        // all the logic below must be moved to controller
-        if (result[0] !== undefined) {
-          req.session.authorized = true
-        }
-
-        if (req.session.authorized === true) {
-          res.send('user ok')
-        } else {
-          res.send('user not ok')
-        }
-      
-      })
-
-      client.close();
-    })
-  })
 }
 
 module.exports = () => UsuariosDAO
