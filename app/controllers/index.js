@@ -27,8 +27,10 @@ module.exports.auth = async function(app, req, res) {
     res.redirect('jogo')
 
   } else {
+
     req.session.authorized = false
     res.render('index', { invalid: { msg: 'Nome de usuário ou senha inválidos' } })
+    
   }  
 
 }
