@@ -1,8 +1,8 @@
-function UsuariosDAO(db) {
+function UserDAO(db) {
   this._conn = db()
 }
 
-UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
+UserDAO.prototype.inserirUsuario = function (usuarioDTO) {
   this._conn.open(function (error, client) {
 
     client.collection('usuarios', function (error, collection) {
@@ -13,7 +13,7 @@ UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
   })
 }
 
-UsuariosDAO.prototype.auth = async function (userDto) {
+UserDAO.prototype.auth = async function (userDto) {
 
   try {
 
@@ -30,4 +30,4 @@ UsuariosDAO.prototype.auth = async function (userDto) {
     
 }
 
-module.exports = () => UsuariosDAO
+module.exports = () => UserDAO
