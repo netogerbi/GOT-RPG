@@ -16,10 +16,12 @@ UsuariosDAO.prototype.inserirUsuario = function (usuarioDTO) {
 UsuariosDAO.prototype.auth = async function (userDto) {
 
   try {
+
     const client = await this._conn.open();
     const collection = await client.collection('usuarios')
     const resultSet = await collection.find(userDto).toArray()
-    return resultSet
+    return resultSet[0]
+
   } catch (error) {
 
     console.log(error)

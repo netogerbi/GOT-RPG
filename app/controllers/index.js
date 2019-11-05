@@ -19,11 +19,13 @@ module.exports.auth = async function(app, req, res) {
   const userDao = new app.app.models.usuariosDAO(conn)
   const loggedUser = await userDao.auth(userDto)
 
-  if (loggedUser && loggedUser.length > 0) {
-    
+  if (loggedUser !== undefined) {
+
     req.session.authorized = true
     req.session.usuario = loggedUser.usuario
     req.session.senha = loggedUser.senha
+    req.session.casa = loggedUser.casa
+
     res.redirect('jogo')
 
   } else {
