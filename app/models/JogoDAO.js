@@ -6,7 +6,7 @@ JogoDAO.prototype.gerarParametros = function(userDTO) {
 
   this._conn.open(function (error, client) {
 
-    client.collection('usuarios', function (error, collection) {
+    client.collection('jogo', function (error, collection) {
       collection.insert({
         usuario: userDTO,
         moeda: 15,
@@ -23,4 +23,22 @@ JogoDAO.prototype.gerarParametros = function(userDTO) {
 
 }
 
+JogoDAO.prototype.iniciarJogo = async function(userDTO) {
+
+  console.log('Recuperando parametros do jogo')
+
+  try {
+
+    const client = await this._conn.open();
+    const collection = await client.collection('jogo')
+    const resultSet = await collection.find(userDTO).toArray()
+    return resultSet[0]
+
+  } catch (error) {
+
+    console.log(error)
+  
+  }
+  
+}
 module.exports = () => JogoDAO

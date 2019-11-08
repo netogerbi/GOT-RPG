@@ -24,7 +24,7 @@ module.exports.cadastrar = function(app, req, res) {
 
 
   const jogosDAO = new app.app.models.JogoDAO(db)
-  jogosDAO.gerarParametros(formData)
+  jogosDAO.gerarParametros(formData.usuario)
   
   res.send('cadastro ok')
 }

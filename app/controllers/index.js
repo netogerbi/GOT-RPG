@@ -16,7 +16,7 @@ module.exports.auth = async function(app, req, res) {
 
   const userDto = req.body
   const conn = app.config.dbConnection
-  const userDao = new app.app.models.usuariosDAO(conn)
+  const userDao = new app.app.models.UserDAO(conn)
   const loggedUser = await userDao.auth(userDto)
 
   if (loggedUser !== undefined) {
