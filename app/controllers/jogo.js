@@ -20,3 +20,11 @@ module.exports.sair = function (app, req, res) {
   })
 
 }
+
+module.exports.suditos = function (app, req, res) {
+  res.render('aldeoes', { invalid: {} })
+}
+
+module.exports.pergaminhos = function (app, req, res) {
+  res.render('pergaminhos', { invalid: {} })
+}
