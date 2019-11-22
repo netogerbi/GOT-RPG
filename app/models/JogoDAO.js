@@ -32,6 +32,7 @@ JogoDAO.prototype.iniciarJogo = async function(userDTO) {
     const client = await this._conn.open();
     const collection = await client.collection('jogo')
     const resultSet = await collection.find(userDTO).toArray()
+    client.close();
     return resultSet[0]
 
   } catch (error) {

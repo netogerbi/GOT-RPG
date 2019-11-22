@@ -20,6 +20,7 @@ UserDAO.prototype.auth = async function (userDto) {
     const client = await this._conn.open();
     const collection = await client.collection('usuarios')
     const resultSet = await collection.find(userDto).toArray()
+    client.close();
     return resultSet[0]
 
   } catch (error) {
