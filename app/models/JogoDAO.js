@@ -42,4 +42,23 @@ JogoDAO.prototype.iniciarJogo = async function(userDTO) {
   }
   
 }
+
+JogoDAO.prototype.salvarAcao = async function(JogoDTO) {
+
+  try{
+
+    const client = await this._conn.open();
+    const collection = await client.collection('acoes')
+    await collection.insert(JogoDTO);
+    client.close();
+  
+  } catch (error) {
+
+    console.log(error);
+
+  }  
+
+}
+
+
 module.exports = () => JogoDAO

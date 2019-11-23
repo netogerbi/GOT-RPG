@@ -47,11 +47,9 @@ module.exports.pergaminhos = function (app, req, res) {
 }
 
 module.exports.ordenarAcaoSudito = function (app, req, res) {
-  const formData = req.body;
-
+  
   req.assert('acao', 'A ação deve ser informada').notEmpty();
   req.assert('quantidade', 'A quantidade deve ser informada').notEmpty();
-
 
   const errors = req.validationErrors();
 
@@ -59,6 +57,18 @@ module.exports.ordenarAcaoSudito = function (app, req, res) {
     res.redirect('jogo?invalid=1');
     return;
   }
+
+  const conn = app.config.dbConnection;
+  const jogoDao = new app.app.models.JogoDAO(conn);
+
+  const formData = req.body;
+
+  formData.usuario = req.session.usuario;
+
+  const tempoDasAcoes = [ 1, 2, 5, 5 ];
+  formData.terminaEm = tempoDasAcoes[ formData.acao - 1 ] * 60 * 60000;
+
+  jogoDao.salvarAcao(formData);
 
   res.send('OKKKKKK');
 }
