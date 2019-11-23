@@ -4,17 +4,22 @@ module.exports.jogo = async function (app, req, res) {
     res.status(401).send("Não autorizado!")
     return
   }
-  const db = app.config.dbConnection
-  const jogoDao = new app.app.models.JogoDAO(db)
+
+  const db = app.config.dbConnection;
+  const jogoDao = new app.app.models.JogoDAO(db);
+
+  let invalid = 0;
+  if (req.query.invalid)
+    invalid = req.query.invalid;
 
   const gameParams = await jogoDao.iniciarJogo({ usuario: req.session.usuario })
 
-  res.render('jogo', { casa: req.session.casa, gameParams: gameParams })
+  res.render('jogo', { casa: req.session.casa, gameParams, invalid })
   
 }
 
 module.exports.sair = function (app, req, res) {
-
+    
   req.session.destroy(function (error) {
     res.render('index', { invalid: {} })
   })
@@ -22,10 +27,22 @@ module.exports.sair = function (app, req, res) {
 }
 
 module.exports.suditos = function (app, req, res) {
+  
+  if (req.session.authorized !== true) {
+    res.status(401).send("Não autorizado!")
+    return
+  }
+  
   res.render('aldeoes', { invalid: {} })
 }
 
 module.exports.pergaminhos = function (app, req, res) {
+  
+  if (req.session.authorized !== true) {
+    res.status(401).send("Não autorizado!")
+    return
+  }
+  
   res.render('pergaminhos', { invalid: {} })
 }
 
@@ -39,10 +56,9 @@ module.exports.ordenarAcaoSudito = function (app, req, res) {
   const errors = req.validationErrors();
 
   if (errors) {
-    res.redirect('jogo');
+    res.redirect('jogo?invalid=1');
     return;
   }
 
-  console.log(errors, formData);
   res.send('OKKKKKK');
 }

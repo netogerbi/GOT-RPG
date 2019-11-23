@@ -1,0 +1,3 @@
+1. GRAVISSIMO - Coloca a resposta direto para a view dentro do model além de fazer regra de negocio dentro do model.
+2. GRAVISSIMO - Impede de acessar formulario de ação usando verificação de autenticação de sessão.
+

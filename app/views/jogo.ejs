@@ -26,6 +26,7 @@
 					url: '/suditos',
 					success: function (data) {
 						$('#acoes').html(data)
+						$('#msg-errors').hide();
 					}
 				})
 			})
@@ -35,7 +36,8 @@
 					method:'GET',
 					url: '/pergaminhos',
 					success: function (data) {
-						$('#acoes').html(data)
+						$('#acoes').html(data);
+						$('#msg-errors').hide();
 					}
 				})
 			})
@@ -55,6 +57,12 @@
 		</nav>
 
 	    <div class="container">
+
+			<% if (invalid) { %>
+				<div class="alert alert-danger" id="msg-errors">
+					<strong>Operação inválida, verifique se todos os campos foram informados.</strong>
+				</div>
+			<% } %>
 	    	
 			<div class="row">
 	    		<div class="col-sm-3 casa">
