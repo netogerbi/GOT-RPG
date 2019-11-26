@@ -8,13 +8,13 @@ module.exports.jogo = async function (app, req, res) {
   const db = app.config.dbConnection;
   const jogoDao = new app.app.models.JogoDAO(db);
 
-  let invalid = 0;
-  if (req.query.invalid)
-    invalid = req.query.invalid;
+  let msg = '';
+  if (req.query.msg !== '')
+    msg = req.query.msg;
 
   const gameParams = await jogoDao.iniciarJogo({ usuario: req.session.usuario })
 
-  res.render('jogo', { casa: req.session.casa, gameParams, invalid })
+  res.render('jogo', { casa: req.session.casa, gameParams, msg })
   
 }
 
@@ -54,7 +54,7 @@ module.exports.ordenarAcaoSudito = function (app, req, res) {
   const errors = req.validationErrors();
 
   if (errors) {
-    res.redirect('jogo?invalid=1');
+    res.redirect('jogo?msg=e');
     return;
   }
 
@@ -70,5 +70,5 @@ module.exports.ordenarAcaoSudito = function (app, req, res) {
 
   jogoDao.salvarAcao(formData);
 
-  res.send('OKKKKKK');
+  res.redirect('jogo?msg=a')
 }
