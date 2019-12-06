@@ -1,5 +1,4 @@
 1. GRAVISSIMO - Coloca a resposta direto para a view dentro do model além de fazer regra de negocio dentro do model.
-2. GRAVISSIMO - Impede de acessar formulario de ação usando verificação de autenticação de sessão.
+2. GRAVISSIMO - Impede de acessar formulario de ação usando verificação de autenticação de sessão, ou seja, se estiver logado voce pode acessar diretamente!
 3. Repetição contínua de código (ex: calculo do tempo).
-
-
+4. Unbind do css ao renderizar as views

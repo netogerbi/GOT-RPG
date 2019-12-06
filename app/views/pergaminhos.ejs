@@ -2,9 +2,22 @@
 	<h3>Pergaminhos</h3>
 	
 	<ul>
-		<li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>2 aldeão(ões) em treinamento de magia - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>1 aldeão(ões) em treinamento de história - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>5 aldeão(ões) coletando recursos - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
+		<% for (let i=0; i < acoes.length; i++) { %>
+			<% 
+				const txtAcoes = [
+					'aldeão(ões) coletando recursos',
+					'enforcamento(s) programado',
+					'aldeão(ões) em treinamento de história',
+					'aldeão(ões) em treinamento de magia'
+				];
+				const tr = ((parseInt(acoes[i].terminaEm) - new Date().getTime())/1000);
+				const tempoRestante = (tr < 0 ? 0 : Math.round(tr));
+			%>
+			<li>
+				<%=acoes[i].quantidade + ' - ' + txtAcoes[parseInt(acoes[i].acao)]%>
+				<small>restam <span class='tempo-restante'><%=tempoRestante%></span> segundos - 
+				<a href="/revogar_ordem?id_acao=<%=acoes[i]._id%>">revogar ordem</a></small>
+			</li>
+		<% } %>
 	</ul>
 </div>

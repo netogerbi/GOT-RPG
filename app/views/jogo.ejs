@@ -20,28 +20,51 @@
 				window.location.href = '/sair'
 			})
 
-			$('#btn-aldeoes').click(function () {
+			function ajax(url) {
 				$.ajax({
 					method:'GET',
-					url: '/suditos',
+					url: url,
 					success: function (data) {
 						$('#acoes').html(data)
 						$('#msg').hide();
 					}
 				})
-			})
+			}
+
+			$('#btn-aldeoes').click(function () {
+				ajax('/suditos')
+			});
 
 			$('#btn-pergaminhos').click(function () {
 				$.ajax({
 					method:'GET',
 					url: '/pergaminhos',
 					success: function (data) {
-						$('#acoes').html(data);
+						$('#acoes').html(data)
 						$('#msg').hide();
+						clearTimeout(timerId);
+						cronometro();
 					}
 				})
-			})
-		})
+			});
+		});
+
+		var timerId = null;
+
+		function cronometro() {
+			$('.tempo-restante').each( function() {
+				let segundos = $(this).html();
+				let segundosAtualizados = parseInt(segundos) - 1;
+				if (segundos <= 0) {
+					window.location.href = '/jogo?msg=c';
+				} else {
+					$(this).html(segundosAtualizados);
+				}
+				
+			});
+
+			timerId = setTimeout('cronometro()', 1000);
+		}
 		</script>
 
 	</head>
@@ -58,6 +81,12 @@
 
 	    <div class="container">
 
+			<% if (msg === 'c') { %>
+				<div class="alert alert-info" id="msg">
+					<strong>Senhor, uma atividade foi finalizada.</strong>
+				</div>
+			<% } %>
+
 			<% if (msg === 'e') { %>
 				<div class="alert alert-danger" id="msg">
 					<strong>Operação inválida, verifique se todos os campos foram informados.</strong>
@@ -67,6 +96,12 @@
 			<% if (msg === 'a') { %>
 				<div class="alert alert-success" id="msg">
 					<strong>Operação realizada com sucesso.</strong>
+				</div>
+			<% } %>
+
+			<% if (msg === 'd') { %>
+				<div class="alert alert-success" id="msg">
+					<strong>Senhor, sua ordem foi revogada.</strong>
 				</div>
 			<% } %>
 
