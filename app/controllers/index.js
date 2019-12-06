@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 module.exports.index = function(app, req, res) {
   res.render('index', { invalid: {} })
 }
@@ -15,6 +17,7 @@ module.exports.auth = async function(app, req, res) {
   }
 
   const userDto = req.body
+  userDto.senha = crypto.createHash('md5').update(userDto.senha).digest('hex')
   const conn = app.config.dbConnection
   const userDao = new app.app.models.UserDAO(conn)
   const loggedUser = await userDao.auth(userDto)

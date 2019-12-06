@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 module.exports.cadastro = function(app, req, res) {
   res.render('cadastro', { invalid: {}, formData: {} } )
 }
@@ -17,8 +19,9 @@ module.exports.cadastrar = function(app, req, res) {
     return;
   }
 
-  const db = app.config.dbConnection
+  formData.senha = crypto.createHash('md5').update(formData.senha).digest('hex')
 
+  const db = app.config.dbConnection
   const usuariosDAO = new app.app.models.UserDAO(db)
   usuariosDAO.inserirUsuario(formData)
 
